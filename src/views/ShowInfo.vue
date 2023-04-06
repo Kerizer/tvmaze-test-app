@@ -32,7 +32,7 @@
             :id="episode.id" 
             :name="episode.name" 
             :description="episode.summary" 
-            :image-src="episode.image.medium"
+            :image-src="episode.image?.medium"
         />
     </div>
 </template>

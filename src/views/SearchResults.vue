@@ -21,10 +21,7 @@ import { useRoute } from 'vue-router';
         <ShowCard
             v-for="show in store.searchResults"
             :key="show.show.id"
-            :id="show.show.id"
-            :name="show.show.name"
-            :image-src="show.show.image?.medium"
-            :description="show.show.summary"
+            :show="show.show"
         ></ShowCard>
     </div>
 </template>

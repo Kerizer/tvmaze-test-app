@@ -1,11 +1,11 @@
 <script lang="ts">
     import sanitizeHtml from 'sanitize-html';
     import { useRouter } from 'vue-router';
+    import type { Ishow } from 'tvmaze-api-ts';
+import FavoriteButton from './FavoriteButton.vue';
+
     interface ShowCardProps {
-        id: number;
-        name: string
-        imageSrc?: string
-        description?: string
+        show: Ishow;
     }
 </script>
 
@@ -13,19 +13,20 @@
     const props = defineProps<ShowCardProps>()
     const router = useRouter();
     const goToShow = () => {
-        router.push({ path: `/shows/${props.id}`});
+        router.push({ path: `/shows/${props.show.id}`});
     }
 </script>
 
 <template>
     <div class="show-card">
         <div @click="goToShow">
-            <img v-if="props.imageSrc" :src="props.imageSrc" :alt="`Poster for the show called '${props.name}'`" />
+            <img v-if="props.show.image?.medium" :src="props.show.image?.medium" :alt="`Poster for the show called '${props.show.name}'`" />
             <div v-else></div>
         </div>
+        <FavoriteButton :show="props.show"></FavoriteButton>
         <div>
-            <h5 class="show-title">{{ props.name }}</h5>
-            <div class="show-description" v-html="sanitizeHtml(props.description || ``)"></div>
+            <h5 class="show-title">{{ props.show.name }}</h5>
+            <div class="show-description" v-html="sanitizeHtml(props.show.summary || ``)"></div>
         </div>
     </div>
 </template>

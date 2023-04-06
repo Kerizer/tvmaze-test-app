@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useTvMazeStore } from '@/stores/tvMaze';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
