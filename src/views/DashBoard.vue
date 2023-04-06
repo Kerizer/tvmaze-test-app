@@ -8,8 +8,22 @@
 
 <template>
     <SearchForm></SearchForm>
-    <RandomShowsContainer />
-    <UpcomingShowsContainer />
+    <Suspense>
+      <RandomShowsContainer />  
+      <template #fallback>
+        <div class="cards">
+        Loading...
+        </div>
+    </template>
+    </Suspense>
+    <Suspense>
+      <UpcomingShowsContainer />
+      <template #fallback>
+        <div class="cards">
+        Loading...
+        </div>
+      </template>
+    </Suspense>
     <FavoriteShowsContainer />
 
 </template>

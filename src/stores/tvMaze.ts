@@ -1,32 +1,38 @@
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core'
 // The module itself is broken, but typings are still working
-import type { Ishow, Iepisode, IshowSearch, Ischedule } from 'tvmaze-api-ts'
+import type { Ishow, Iepisode, IshowSearch, Ischedule, Iratring } from 'tvmaze-api-ts'
+
+// Typo in acual library
+export interface Show extends Ishow {
+    rating: Iratring;
+}
 
 // For some reason library doesn't have the show in the interface
 interface Episode extends Iepisode {
-    show: Ishow;
+    show: Show;
 }
 
 type GroupedEpisodes = { [showId: number]: Episode[] };
 
 type ShowWithEpisodes = {
-    show: Ishow;
+    show: Show;
     episodes: Episode[];
 };
 
 interface TvMazeState {
-    shows: Ishow[];
+    shows: Show[];
     currentShowInfo: any;
     currentShowEpisodes: Iepisode[];
     searchResults: IshowSearch[];
-    favoriteShows: Ishow[];
-    upcomingShows: Ishow[];
+    favoriteShows: Show[];
+    upcomingShows: Show[];
 }
 
 const api = "https://api.tvmaze.com";
 
-const favoriteShows = useStorage('favoriteShows', []) as unknown as Ishow[];
+// TODO: Find a better way to use useStorage with typings
+const favoriteShows = useStorage('favoriteShows', []) as unknown as Show[];
 
 export const useTvMazeStore = defineStore('tvMaze', {
     state: ():TvMazeState => ({
@@ -45,7 +51,8 @@ export const useTvMazeStore = defineStore('tvMaze', {
             return (id: number) => Boolean(state.favoriteShows.find(show => show.id === id));
         },
         getRandomShows(state) {
-            return (n: number): Ishow[] => {
+            return (n: number): Show[] => {
+                console.log("getting random");
                 const result = new Array(n);
                 let len = state.shows.length;
                 const taken = new Array(len);
@@ -65,21 +72,21 @@ export const useTvMazeStore = defineStore('tvMaze', {
             }
         },
         getUpcomingShows(state) {
-            return (n: number): Ishow[] => {
+            return (n: number): Show[] => {
                 return state.upcomingShows.splice(0, n)
             }
         }
     },
     actions: {
         async getShows() {
-            fetch(`${api}/shows`)
-                .then((response) => response.json())
-                .then((data) => { if (JSON.stringify(this.shows)!==data) { console.log("changed"); this.shows = data; } })
+            await fetch(`${api}/shows`)
+                .then((response) => { return response.json()})
+                .then((data) => { this.shows = data;  })
                 .catch((error) => console.log(error));
         },
         async getShowInfo(id: number) {
             fetch(`${api}/shows/${id}`)
-                .then((response) => response.json())
+                .then((response) => { return response.json()})
                 .then((data) => { this.currentShowInfo = data; })
                 .catch((error) => console.error(error));
         },
@@ -95,13 +102,13 @@ export const useTvMazeStore = defineStore('tvMaze', {
                 .then((data) => { this.searchResults = data; })
                 .catch((error) => console.error(error));
         },
-        async addFavoriteShow(show: Ishow) {
+        async addFavoriteShow(show: Show) {
             this.favoriteShows.push(show);
         },
-        async removeFavoriteShow(id: Ishow["id"]) {
+        async removeFavoriteShow(id: Show["id"]) {
             this.favoriteShows = this.favoriteShows.filter((show) => show.id !== id);
         },
-        async getShowsWithUpcomingEpisodes(n = 3) {
+        async getShowsWithUpcomingEpisodes() {
             fetch(`${api}/schedule?country=US&date=${new Date().toISOString().slice(0, 10)}`)
                 .then((response) => response.json())
                 .then((data: Episode[]) => {
@@ -146,6 +153,12 @@ export const useTvMazeStore = defineStore('tvMaze', {
         },
         clearEpisodes() {
             this.currentShowEpisodes = [];
+        },
+        clearShows() {
+            this.shows = [];
+        },
+        clearUpcomingShows() {
+            this.upcomingShows = [];
         },
     },
 });

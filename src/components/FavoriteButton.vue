@@ -1,9 +1,9 @@
 <script lang="ts">
     import { useTvMazeStore } from '@/stores/tvMaze';
-    import type { Ishow } from 'tvmaze-api-ts';
+    import type { Show } from '@/stores/tvMaze';
 
     interface FavoriteButtonProps {
-        show: Ishow;
+        show: Show;
     }
 </script>
 
@@ -20,7 +20,36 @@
 </script>
 
 <template>
-    {{ store.isFavorite(show.id) }}
-    <p v-if="!store.isFavorite(show.id)" @click.prevent="addFavoriteShow">Add to favorite</p>
-    <p v-else @click.prevent="removeFavoriteShow">Remove from favorite</p>
+    <div class="favorite">
+        <p v-if="!store.isFavorite(show.id)" @click.prevent="addFavoriteShow" class="add-favorite">♥</p>
+        <p v-else @click.prevent="removeFavoriteShow" class="favorite remove-favorite">♥</p>
+    </div>
 </template>
+
+<style scoped>
+    .favorite {
+        height: 24px;
+
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 24px;
+        display: flex;
+        align-items: center;
+
+        flex: 1;
+        color: #FFFFFF;
+        text-shadow: 0px 0px 3px #000000;
+    }
+
+    .remove-favorite {
+        cursor: pointer;
+        opacity: 1;
+    }
+    
+    .add-favorite {
+        cursor: pointer;
+        opacity: 0.3;
+    }
+</style>

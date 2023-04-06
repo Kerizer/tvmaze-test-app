@@ -1,11 +1,11 @@
 <script lang="ts">
     import sanitizeHtml from 'sanitize-html';
     import { useRouter } from 'vue-router';
-    import type { Ishow } from 'tvmaze-api-ts';
-import FavoriteButton from './FavoriteButton.vue';
+    import type { Show } from '@/stores/tvMaze';
+    import FavoriteButton from './FavoriteButton.vue';
 
     interface ShowCardProps {
-        show: Ishow;
+        show: Show;
     }
 </script>
 
@@ -19,11 +19,14 @@ import FavoriteButton from './FavoriteButton.vue';
 
 <template>
     <div class="show-card">
-        <div @click="goToShow">
-            <img v-if="props.show.image?.medium" :src="props.show.image?.medium" :alt="`Poster for the show called '${props.show.name}'`" />
+        <div class="show-poster">
+            <img @click="goToShow" v-if="props.show.image?.medium" :src="props.show.image?.medium" :alt="`Poster for the show called '${props.show.name}'`" />
             <div v-else></div>
+            <div class="card-controls">
+                <p class="show-rating">★{{ props.show.rating.average }}</p>
+                <FavoriteButton :show="props.show"></FavoriteButton>
+            </div>
         </div>
-        <FavoriteButton :show="props.show"></FavoriteButton>
         <div>
             <h5 class="show-title">{{ props.show.name }}</h5>
             <div class="show-description" v-html="sanitizeHtml(props.show.summary || ``)"></div>
@@ -32,17 +35,53 @@ import FavoriteButton from './FavoriteButton.vue';
 </template>
 
 <style scoped>
+    .card-controls {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        padding: 4px;
+        gap: 4px;
+
+        position: absolute;
+        left: 0px;
+        width: 100%;
+        bottom: 0px;
+        
+    }
+
+    .show-rating {
+        width: 22px;
+        height: 24px;
+
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        display: flex;
+        align-items: center;
+
+        color: #FFFFFF;
+
+        text-shadow: 0px 0px 3px #000000;
+        flex: 1;
+        cursor: default;
+    }
     .show-card {
+        position: relative;
         flex-direction: row;
         display: flex;
         padding: 0px;
         width: 437.33px;
-        height: 220px;
  
         flex: none;
         order: 0;
         align-self: stretch;
         flex-grow: 1;
+    }
+
+    .show-poster {
+        width: 100%;
     }
 
     .show-description {

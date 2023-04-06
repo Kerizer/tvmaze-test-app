@@ -1,13 +1,17 @@
 <script setup lang="ts">
     import ShowCard from '@/components/ShowCard.vue';
     import { useTvMazeStore } from '@/stores/tvMaze';
-    import { onMounted } from 'vue';
+    import { onMounted, onUnmounted } from 'vue';
 
 
     const store = useTvMazeStore();
 
     onMounted(() => {
         store.getShowsWithUpcomingEpisodes();
+    });
+
+    onUnmounted(() => {
+        store.clearUpcomingShows();
     });
 </script>
 
