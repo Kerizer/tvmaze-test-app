@@ -17,7 +17,6 @@ import { useRoute } from 'vue-router';
 
 <template>
     <div>
-        Looking for {{ route.params.query.toString() }}
         <ShowCard
             v-for="show in store.searchResults"
             :key="show.show.id"

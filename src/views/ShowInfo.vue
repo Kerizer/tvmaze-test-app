@@ -6,23 +6,20 @@
 
     const route = useRoute()
 
-
-
     const store = useTvMazeStore();
 
     onMounted(() => {
-        store.getEpisodesByShowId(Number(route.params.id));
+        store.getEpisodesByShowId(Number(route.params.showId));
     });
 
     onUnmounted(() => {
         store.clearEpisodes();
     })
-  
   </script>
 
 <template>
     <div>
-        I am the info about the show {{ route.params.id }}
+        I am the info about the show {{ route.params.showId }}
         <h4>Episodes</h4>
         <EpisodeCard 
             v-for="episode in store.currentShowEpisodes" 

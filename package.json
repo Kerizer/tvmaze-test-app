@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.13.0",
+    "path-to-regexp": "^6.2.1",
     "pinia": "^2.0.32",
     "sanitize-html": "^2.10.0",
     "vue": "^3.2.47",
@@ -24,7 +25,6 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
     "@types/jsdom": "^21.1.0",
-    "@types/node": "^18.14.2",
     "@types/sanitize-html": "^2.9.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-prettier": "^7.1.0",

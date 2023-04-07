@@ -52,7 +52,6 @@ export const useTvMazeStore = defineStore('tvMaze', {
         },
         getRandomShows(state) {
             return (n: number): Show[] => {
-                console.log("getting random");
                 const result = new Array(n);
                 let len = state.shows.length;
                 const taken = new Array(len);
@@ -61,7 +60,6 @@ export const useTvMazeStore = defineStore('tvMaze', {
                 if (n > len) {
                     return state.shows;
                 }
-
 
                 while (n--) {
                     const x = Math.floor(Math.random() * len);
