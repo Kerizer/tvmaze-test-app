@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core'
 // The module itself is broken, but typings are still working
 import type { Ishow, Iepisode, IshowSearch, Ischedule, Iratring } from 'tvmaze-api-ts'
+import { buildURLQuery } from '@/utils';
 
 // Typo in acual library
 export interface Show extends Ishow {
@@ -82,8 +83,11 @@ export const useTvMazeStore = defineStore('tvMaze', {
                 .then((data) => { this.shows = data;  })
                 .catch((error) => console.log(error));
         },
-        async getShowInfo(id: number) {
-            fetch(`${api}/shows/${id}`)
+        async getShowInfo(id: number, shouldIncludeEpisodes: boolean = false) {
+            const params = {
+                embed: shouldIncludeEpisodes ? 'episodes' : ''
+            };
+            fetch(`${api}/shows/${id}?${buildURLQuery(params)}`)
                 .then((response) => { return response.json()})
                 .then((data) => { this.currentShowInfo = data; })
                 .catch((error) => console.error(error));
@@ -145,6 +149,9 @@ export const useTvMazeStore = defineStore('tvMaze', {
                     this.upcomingShows = showsWithEpisodes.map((showWithEpisodes) => (showWithEpisodes.show));
                 })
                 .catch((error) => console.error(error));
+        },
+        clearCurrentShowInfo() {
+            this.currentShowInfo = {};
         },
         clearSearchResults() {
             this.searchResults = [];

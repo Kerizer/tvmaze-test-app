@@ -20,13 +20,19 @@
 </script>
 
 <template>
-    <div class="favorite">
-        <p v-if="!store.isFavorite(show.id)" @click.prevent="addFavoriteShow" class="add-favorite">♥</p>
-        <p v-else @click.prevent="removeFavoriteShow" class="favorite remove-favorite">♥</p>
+    <div class="favorite-controls">
+        <button v-if="!store.isFavorite(show.id)" @click.prevent="addFavoriteShow" class="favorite add-favorite">♥</button>
+        <button v-else @click.prevent="removeFavoriteShow" class="favorite remove-favorite">♥</button>
     </div>
 </template>
 
 <style scoped>
+    .favorite-controls {
+        display: flex;
+        flex: 1;
+        justify-content: flex-end;
+
+    }
     .favorite {
         height: 24px;
 
@@ -37,8 +43,9 @@
         line-height: 24px;
         display: flex;
         align-items: center;
+        background: none;
+        border: none;
 
-        flex: 1;
         color: #FFFFFF;
         text-shadow: 0px 0px 3px #000000;
     }

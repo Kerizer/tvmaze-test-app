@@ -23,7 +23,7 @@
             <img @click="goToShow" v-if="props.show.image?.medium" :src="props.show.image?.medium" :alt="`Poster for the show called '${props.show.name}'`" />
             <div v-else></div>
             <div class="card-controls">
-                <p class="show-rating">★{{ props.show.rating.average }}</p>
+                <p class="show-rating">★{{ props.show.rating?.average }}</p>
                 <FavoriteButton :show="props.show"></FavoriteButton>
             </div>
         </div>
@@ -72,16 +72,24 @@
         flex-direction: row;
         display: flex;
         padding: 0px;
-        width: 437.33px;
  
         flex: none;
         order: 0;
         align-self: stretch;
         flex-grow: 1;
+        flex: 1;
+        margin-right: 50px;
+    }
+
+    .show-poster img {
+        width: 150px;
+        border-radius: 5px;
     }
 
     .show-poster {
-        width: 100%;
+        margin-right: 20px;
+        width: 150px;
+        height: fit-content;
     }
 
     .show-description {

@@ -6,9 +6,9 @@
 
     const store = useTvMazeStore();
 
-    onMounted(() => {
-        store.getShowsWithUpcomingEpisodes();
-    });
+    // onMounted(() => {
+        await store.getShowsWithUpcomingEpisodes();
+    // });
 
     onUnmounted(() => {
         store.clearUpcomingShows();
@@ -16,7 +16,7 @@
 </script>
 
 <template>
-    <h4>Upcoming:</h4>
+    <h4>New episodes coming soon in:</h4>
     <div class="cards">
       <ShowCard v-for="show in store.getUpcomingShows(3)" :key="show.id" :show="show"></ShowCard>
     </div>
