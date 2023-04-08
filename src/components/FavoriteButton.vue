@@ -21,8 +21,8 @@
 
 <template>
     <div class="favorite-controls">
-        <button v-if="!store.isFavorite(show.id)" @click.prevent="addFavoriteShow" class="favorite add-favorite">♥</button>
-        <button v-else @click.prevent="removeFavoriteShow" class="favorite remove-favorite">♥</button>
+        <button v-if="!store.isFavorite(show.id)" @click.prevent.stop="addFavoriteShow" class="favorite add-favorite">♥</button>
+        <button v-else @click.prevent.stop="removeFavoriteShow" class="favorite remove-favorite">♥</button>
     </div>
 </template>
 

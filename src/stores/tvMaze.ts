@@ -132,7 +132,7 @@ export const useTvMazeStore = defineStore('tvMaze', {
         async removeFavoriteShow(id: Show["id"]) {
             this.favoriteShows = this.favoriteShows.filter((show) => show.id !== id);
         },
-        async getShowsWithUpcomingEpisodes(date = new Date().toISOString().slice(0, 10)) {
+        async getShowsWithUpcomingEpisodes(minEpisodes = 3, date = new Date().toISOString().slice(0, 10)) {
             fetch(`${api}/schedule?country=US&date=${date}`)
                 .then((response) => response.json())
                 .then(async (data: Episode[]) => {
@@ -176,10 +176,10 @@ export const useTvMazeStore = defineStore('tvMaze', {
                         return [...acc, show.show];
                     }, []);
 
-                    if (upcomingShows.length < 3) {
+                    if (upcomingShows.length < minEpisodes) {
                         const tomorrow = new Date().setDate(new Date(date).getDate() + 1);
                         const store = useTvMazeStore();
-                        await store.getShowsWithUpcomingEpisodes(new Date(tomorrow).toISOString().slice(0, 10));
+                        await store.getShowsWithUpcomingEpisodes(minEpisodes, new Date(tomorrow).toISOString().slice(0, 10));
                     }
 
                     this.upcomingShows = [...this.upcomingShows, ...upcomingShows];

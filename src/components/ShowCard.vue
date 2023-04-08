@@ -18,9 +18,9 @@
 </script>
 
 <template>
-    <div class="show-card">
+    <div class="show-card" @click="goToShow">
         <div class="show-poster">
-            <img @click="goToShow" v-if="props.show.image?.medium" :src="props.show.image?.medium" :alt="`Poster for the show called '${props.show.name}'`" />
+            <img v-if="props.show.image?.medium" :src="props.show.image?.medium" :alt="`Poster for the show called '${props.show.name}'`" />
             <div v-else></div>
             <div class="card-controls">
                 <p class="show-rating">★{{ props.show.rating?.average }}</p>
@@ -100,6 +100,13 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .show-card:hover {
+        cursor: pointer;
+    }
+    .show-card:hover .show-title {
+        text-decoration: underline;
     }
 
     .show-description {

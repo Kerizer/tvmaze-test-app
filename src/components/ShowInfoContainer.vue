@@ -73,7 +73,7 @@
                 <p>Network: {{ show.network?.name }}</p>
                 <p>Show type: {{ show.type }}</p>
                 <p>Language: {{ show.language }}</p>
-                <p>Genres: {{ show.genres?.join(", ") }}</p>
+                <p>Genres: {{ show.genres && show.genres.length ? show.genres?.join(", ") : `N/A` }}</p>
                 <p>Status: {{ show.status }}</p>
                 <p>
                     Official site: 

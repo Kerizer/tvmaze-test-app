@@ -19,6 +19,7 @@ a,
 
 @media (hover: hover) {
   a:hover {
+    text-decoration: underline;
   }
 }
 
