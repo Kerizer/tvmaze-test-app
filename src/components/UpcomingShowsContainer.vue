@@ -21,3 +21,11 @@
       <ShowCard v-for="show in store.getUpcomingShows(3)" :key="show.id" :show="show"></ShowCard>
     </div>
 </template>
+
+<style scoped>
+  h4 {
+    font-size: 24px;
+    line-height: 29px;
+    margin: 34px 0 24px;
+  }
+</style>

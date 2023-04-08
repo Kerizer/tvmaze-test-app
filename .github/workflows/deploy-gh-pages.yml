@@ -1,11 +1,9 @@
 name: Deploy
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
@@ -33,6 +31,8 @@ jobs:
         shell: bash
         run: |
             git add -f dist/
-            git remote add gh-pages https://${{ secrets.API_TOKEN }}@github.com/${{ github.repository }}.git
+            git remote add gh-pages-origin https://${{ secrets.API_TOKEN }}@github.com/${{ github.repository }}.git
             git commit -m 'Deploying app'
-            git subtree push --prefix dist gh-pages gh-pages
+            git push gh-pages-origin --delete gh-pages
+            git subtree push --prefix dist gh-pages-origin gh-pages
+            # git push gh-pages-origin `git subtree split --prefix dist gh-pages`:gh-pages --force

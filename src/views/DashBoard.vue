@@ -9,20 +9,20 @@
 <template>
     <SearchForm></SearchForm>
     <Suspense>
-      <RandomShowsContainer />  
-      <template #fallback>
-        <div class="cards">
-        Loading...
-        </div>
-    </template>
-    </Suspense>
-    <Suspense>
       <UpcomingShowsContainer />
       <template #fallback>
         <div class="cards">
         Loading...
         </div>
       </template>
+    </Suspense>
+    <Suspense>
+      <RandomShowsContainer />  
+      <template #fallback>
+        <div class="cards">
+        Loading...
+        </div>
+    </template>
     </Suspense>
     <FavoriteShowsContainer />
 
@@ -34,6 +34,5 @@
     flex-direction: row;
     align-items: flex-start;
     padding: 0px;
-    height: 300px;
   }
 </style>
