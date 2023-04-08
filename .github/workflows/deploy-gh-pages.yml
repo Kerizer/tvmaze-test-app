@@ -40,7 +40,6 @@ jobs:
         run: |
             cd dist
             ln -s index.html 404.html
-            git init
             git add -A
             git commit -m 'Deploying app'
             git push -f https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git gh-pages
