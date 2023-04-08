@@ -1,17 +1,29 @@
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core'
 // The module itself is broken, but typings are still working
-import type { Ishow, Iepisode, IshowSearch, Ischedule, Iratring } from 'tvmaze-api-ts'
+import type { Ishow, Iepisode, IshowSearch, Inetwork, Iratring } from 'tvmaze-api-ts'
 import { buildURLQuery } from '@/utils';
 
-// Typo in acual library
+// Typos in actual library
+interface Network extends Inetwork {
+    name: string;
+}
+
 export interface Show extends Ishow {
-    rating: Iratring;
+    
+    // Typos in actual library
+    rating: Iratring | null;
+    network: Network;
+
+    // Missing in library
+    ended?: string;
+    averageRuntime: number;
 }
 
 // For some reason library doesn't have the show in the interface
 interface Episode extends Iepisode {
     show: Show;
+    rating: Iratring;
 }
 
 type GroupedEpisodes = { [showId: number]: Episode[] };
@@ -21,11 +33,21 @@ type ShowWithEpisodes = {
     episodes: Episode[];
 };
 
+interface SearchResults extends IshowSearch {
+    show: Show;
+}
+
+interface CurrentShowInfo extends Show {
+    _embedded: {
+       episodes: Episode[];
+    }
+}
+
 interface TvMazeState {
     shows: Show[];
-    currentShowInfo: any;
+    currentShowInfo?: CurrentShowInfo;
     currentShowEpisodes: Iepisode[];
-    searchResults: IshowSearch[];
+    searchResults: SearchResults[];
     favoriteShows: Show[];
     upcomingShows: Show[];
 }
@@ -38,7 +60,7 @@ const favoriteShows = useStorage('favoriteShows', []) as unknown as Show[];
 export const useTvMazeStore = defineStore('tvMaze', {
     state: ():TvMazeState => ({
         shows: [],
-        currentShowInfo: {},
+        currentShowInfo: undefined,
         currentShowEpisodes: [],
         searchResults: [],
         favoriteShows,
@@ -110,10 +132,10 @@ export const useTvMazeStore = defineStore('tvMaze', {
         async removeFavoriteShow(id: Show["id"]) {
             this.favoriteShows = this.favoriteShows.filter((show) => show.id !== id);
         },
-        async getShowsWithUpcomingEpisodes() {
-            fetch(`${api}/schedule?country=US&date=${new Date().toISOString().slice(0, 10)}`)
+        async getShowsWithUpcomingEpisodes(date = new Date().toISOString().slice(0, 10)) {
+            fetch(`${api}/schedule?country=US&date=${date}`)
                 .then((response) => response.json())
-                .then((data: Episode[]) => {
+                .then(async (data: Episode[]) => {
                     // Sort the schedule by date in ascending order
                     data.sort((a, b) => {
                         return a.airdate.localeCompare(b.airdate);
@@ -141,17 +163,31 @@ export const useTvMazeStore = defineStore('tvMaze', {
                         return { show, episodes };
                     });
                 
-                    // Sort the shows by the next airdate in ascending order
-                    showsWithEpisodes.sort((a, b) =>
-                        a.episodes[0].airdate.localeCompare(b.episodes[0].airdate)
-                    );
+                    // Sort the shows by the next airstamp in ascending order
+                    showsWithEpisodes.sort((a, b) => {
+                        return a.episodes[0].airstamp.localeCompare(b.episodes[0].airstamp)
+                    });
 
-                    this.upcomingShows = showsWithEpisodes.map((showWithEpisodes) => (showWithEpisodes.show));
+                    const upcomingShows: Show[] = showsWithEpisodes.reduce((acc: Show[], show: ShowWithEpisodes) => {
+                        // Remove shows that already ended
+                        if (new Date(show.episodes[0].airstamp).getTime() < new Date().getTime()) {
+                            return acc;
+                        }
+                        return [...acc, show.show];
+                    }, []);
+
+                    if (upcomingShows.length < 3) {
+                        const tomorrow = new Date().setDate(new Date(date).getDate() + 1);
+                        const store = useTvMazeStore();
+                        await store.getShowsWithUpcomingEpisodes(new Date(tomorrow).toISOString().slice(0, 10));
+                    }
+
+                    this.upcomingShows = [...this.upcomingShows, ...upcomingShows];
                 })
                 .catch((error) => console.error(error));
         },
         clearCurrentShowInfo() {
-            this.currentShowInfo = {};
+            this.currentShowInfo = undefined;
         },
         clearSearchResults() {
             this.searchResults = [];

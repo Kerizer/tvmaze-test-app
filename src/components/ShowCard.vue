@@ -92,10 +92,23 @@
         height: fit-content;
     }
 
-    .show-description {
-        text-align: left;
+    .show-title {
+        font-size: 24px;
+        line-height: 29px;
         display: -webkit-box;
-        -webkit-line-clamp: 11; /*define how many line you want to show */
+        -webkit-line-clamp: 2; /*define how many line you want to show */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .show-description {
+        margin-top: 10px;
+        text-align: left;
+        font-size: 14px;
+        line-height: 17px;
+        display: -webkit-box;
+        -webkit-line-clamp: 8; /*define how many line you want to show */
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
