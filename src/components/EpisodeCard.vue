@@ -1,5 +1,6 @@
 <script lang="ts">
     import sanitizeHtml from 'sanitize-html';
+    import noImage from '@/assets/No_image.png'
     interface EpisodeCardProps {
         id: number;
         name: string
@@ -24,7 +25,7 @@
         <div class="episode-data">
             <div class="episode-poster">
                 <img v-if="props.imageSrc" :src="props.imageSrc" :alt="`Poster for the episode called '${props.name}'`" />
-                <div v-else></div>
+                <img v-else :src="noImage" :alt="`There is no poster for the episode called '${props.name}', so it's a placeholder here`">
             </div>
             <div class="episode-info">
                 <div class="episode-description" v-html="sanitizeHtml(props.description || ``)"></div>

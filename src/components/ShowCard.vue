@@ -3,6 +3,7 @@
     import { useRouter } from 'vue-router';
     import type { Show } from '@/stores/tvMaze';
     import FavoriteButton from './FavoriteButton.vue';
+    import noImage from '@/assets/No_image.png'
 
     interface ShowCardProps {
         show: Show;
@@ -21,7 +22,7 @@
     <div class="show-card" @click="goToShow">
         <div class="show-poster">
             <img v-if="props.show.image?.medium" :src="props.show.image?.medium" :alt="`Poster for the show called '${props.show.name}'`" />
-            <div v-else></div>
+            <img v-else :src="noImage" :alt="`There is no poster for the episode called '${props.show.name}', so it's a placeholder here`">
             <div class="card-controls">
                 <p class="show-rating">★{{ props.show.rating?.average }}</p>
                 <FavoriteButton :show="props.show"></FavoriteButton>

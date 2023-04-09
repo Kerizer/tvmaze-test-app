@@ -8,7 +8,8 @@
 
 <script setup lang="ts">
     import { useTvMazeStore } from '@/stores/tvMaze';
-import { useRouter } from 'vue-router';
+    import { useRouter } from 'vue-router';
+    import noImage from '@/assets/No_image.png'
 
     const props = defineProps<FavoriteShowProps>()
     
@@ -28,6 +29,7 @@ import { useRouter } from 'vue-router';
 <template>
     <div class="favorite-show-card" @click.prevent="goToShow">
         <img v-if="props.imageSrc" :src="props.imageSrc" />
+        <img v-else :src="noImage" :alt="`There is no poster for the show, so it's a placeholder here`">
         <h5>{{ props.showTitle }}</h5>
         <span @click.stop="removeFavoriteShow">X</span>
     </div>
