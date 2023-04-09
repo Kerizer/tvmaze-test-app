@@ -1,3 +1,5 @@
+[![Deploy](https://github.com/Kerizer/tvmaze-test-app/actions/workflows/deploy-gh-pages.yml/badge.svg)](https://github.com/Kerizer/tvmaze-test-app/actions/workflows/deploy-gh-pages.yml)
+Link to hosted static: [Link](https://kerizer.github.io/tvmaze-test-app/)
 # tvmaze-test
 
 This template should help get you started developing with Vue 3 in Vite.
