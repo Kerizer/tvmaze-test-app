@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import ShowCard from '@/components/ShowCard.vue';
+    import ShowsList from '@/components/ShowsList.vue';
     import { useTvMazeStore } from '@/stores/tvMaze';
     import { onMounted, onUnmounted } from 'vue';
 
@@ -16,16 +16,5 @@
 </script>
 
 <template>
-    <h4>Random 3 films:</h4>
-    <div class="cards">
-      <ShowCard v-for="show in store.getRandomShows(3)" :key="show.id" :show="show"></ShowCard>
-    </div>
+    <ShowsList title="Random 3 films:" :shows="store.getRandomShows(3)" />
 </template>
-
-<style scoped>
-  h4 {
-    font-size: 24px;
-    line-height: 29px;
-    margin: 34px 0 24px;
-  }
-</style>

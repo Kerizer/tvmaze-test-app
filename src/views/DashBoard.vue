@@ -27,13 +27,3 @@
     <FavoriteShowsContainer />
 
 </template>
-
-<style>
-  .cards {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0px;
-    flex-wrap: wrap;
-  }
-</style>
