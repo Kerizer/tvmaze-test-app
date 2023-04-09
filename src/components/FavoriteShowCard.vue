@@ -35,7 +35,8 @@ import { useRouter } from 'vue-router';
 
 <style scoped>
     .favorite-show-card {
-        flex: 1 0 15%;
+        max-width: 17%;
+        flex: 1 0 17%;
         display: flex;
         margin-right: 90px;
         height: 40px;
@@ -53,6 +54,10 @@ import { useRouter } from 'vue-router';
         font-size: 18px;
         line-height: 40px;
         margin-left: 10px;
+        text-overflow: ellipsis;
+        display: inline;
+        white-space: nowrap;
+        overflow: hidden;
     }
     .favorite-show-card span {
         /* text-align: center; */
