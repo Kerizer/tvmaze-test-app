@@ -27,7 +27,7 @@
                 <FavoriteButton :show="props.show"></FavoriteButton>
             </div>
         </div>
-        <div>
+        <div class="show-info">
             <h5 class="show-title">{{ props.show.name }}</h5>
             <div class="show-description" v-html="sanitizeHtml(props.show.summary || ``)"></div>
         </div>
@@ -79,6 +79,7 @@
         flex-grow: 1;
         flex: 1;
         margin-right: 50px;
+        margin-bottom: 20px;
     }
 
     .show-poster img {
@@ -90,6 +91,11 @@
         margin-right: 20px;
         width: 150px;
         height: fit-content;
+    }
+
+    .show-info {
+        max-width: fit-content;
+        flex: 1 1 15rem;
     }
 
     .show-title {

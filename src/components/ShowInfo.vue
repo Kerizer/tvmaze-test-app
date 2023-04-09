@@ -81,6 +81,7 @@
 <style scoped>
     .show-main-info {
         display: flex;
+        flex-wrap: wrap;
     }
     .show-details {
         flex: 1;
@@ -94,5 +95,6 @@
 
         border: 1px solid #D8D8D8;
         border-radius: 5px;
+        min-width: 200px;
     }
 </style>

@@ -45,17 +45,21 @@
         flex-direction: column;
     }
 
+    .episode-data {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
     .episode-info {
         font-size: 14px;
         line-height: 17px;
         display: flex;
         flex-direction: column;
-    }
-
-    .episode-data {
-        margin-top: 10px;
-        display: flex;
-        flex-direction: row;
+        max-width: fit-content;
+        flex: 1 1 15rem;
+        min-width: 15rem;
     }
 
     .episode-poster {
