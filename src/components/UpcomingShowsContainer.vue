@@ -7,7 +7,7 @@
     const store = useTvMazeStore();
 
     // onMounted(() => {
-        await store.getShowsWithUpcomingEpisodes(3);
+    await store.getShowsWithUpcomingEpisodes(3);
     // });
 
     onUnmounted(() => {
