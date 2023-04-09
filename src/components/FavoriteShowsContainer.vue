@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
-import ShowCard from '@/components/ShowCard.vue';
 import { useTvMazeStore } from '@/stores/tvMaze';
+import FavoriteShowCard from './FavoriteShowCard.vue';
 
 
 const store = useTvMazeStore();
@@ -9,8 +9,11 @@ const store = useTvMazeStore();
 
 <template>
     <h4>Favorites</h4>
-    <div class="cards">
-      <ShowCard v-for="show in store.favoriteShows" :key="show.id" :show="show"></ShowCard>
+    <div v-if="!store.favoriteShows.length">
+      No favorite shows added
+    </div>
+    <div v-else class="cards">
+      <FavoriteShowCard :id="show.id" v-for="show in store.favoriteShows" :key="show.id" :image-src="show.image?.medium" :show-title="show.name"></FavoriteShowCard>
     </div>
 </template>
 
