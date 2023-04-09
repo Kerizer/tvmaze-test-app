@@ -6,6 +6,11 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
@@ -23,16 +28,19 @@ jobs:
         run: npm ci
       - name: Building dist
         run: npm run build
-      - name: Setting git user
-        run: |
-            git config --global user.email "vikkaming@gmail.com"
-            git config --global user.name "Pavlo Pakholka"
-      - name: Push bundle to gh-pages branch
-        shell: bash
-        run: |
-            git add -f dist/
-            git remote add gh-pages-origin https://${{ secrets.API_TOKEN }}@github.com/${{ github.repository }}.git
-            git commit -m 'Deploying app'
-            git push gh-pages-origin --delete gh-pages
-            git subtree push --prefix dist gh-pages-origin gh-pages
-            # git push gh-pages-origin `git subtree split --prefix dist gh-pages`:gh-pages --force
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./dist
+
+# Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
