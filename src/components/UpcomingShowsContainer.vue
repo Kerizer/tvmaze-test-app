@@ -1,20 +1,19 @@
 <script setup lang="ts">
-    import ShowsList from '@/components/ShowsList.vue';
-    import { useTvMazeStore } from '@/stores/tvMaze';
-    import { onMounted, onUnmounted } from 'vue';
+import ShowsList from '@/components/ShowsList.vue';
+import { useTvMazeStore } from '@/stores/tvMaze';
+import { onMounted, onUnmounted } from 'vue';
 
+const store = useTvMazeStore();
 
-    const store = useTvMazeStore();
+// onMounted(() => {
+await store.getShowsWithUpcomingEpisodes(3);
+// });
 
-    // onMounted(() => {
-    await store.getShowsWithUpcomingEpisodes(3);
-    // });
-
-    onUnmounted(() => {
-        store.clearUpcomingShows();
-    });
+onUnmounted(() => {
+  store.clearUpcomingShows();
+});
 </script>
 
 <template>
-    <ShowsList title="New episodes coming soon in:" :shows="store.getUpcomingShows(3)" />
+  <ShowsList title="New episodes coming soon in:" :shows="store.getUpcomingShows(3)" />
 </template>

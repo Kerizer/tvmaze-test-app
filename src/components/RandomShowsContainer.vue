@@ -1,20 +1,19 @@
 <script setup lang="ts">
-    import ShowsList from '@/components/ShowsList.vue';
-    import { useTvMazeStore } from '@/stores/tvMaze';
-    import { onMounted, onUnmounted } from 'vue';
+import ShowsList from '@/components/ShowsList.vue';
+import { useTvMazeStore } from '@/stores/tvMaze';
+import { onMounted, onUnmounted } from 'vue';
 
+const store = useTvMazeStore();
 
-    const store = useTvMazeStore();
+// onMounted(() => {
+await store.getShows();
+// });
 
-    // onMounted(() => {
-    await store.getShows();
-    // });
-
-    onUnmounted(() => {
-        store.clearShows();
-    });
+onUnmounted(() => {
+  store.clearShows();
+});
 </script>
 
 <template>
-    <ShowsList title="Random 3 films:" :shows="store.getRandomShows(3)" />
+  <ShowsList title="Random 3 films:" :shows="store.getRandomShows(3)" />
 </template>

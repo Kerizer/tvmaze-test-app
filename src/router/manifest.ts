@@ -1,6 +1,7 @@
-import type { RouteRecordRaw  } from "vue-router";
+import type { RouteRecordRaw } from 'vue-router';
 
-const manifest: RouteRecordRaw[] = [{   
+const manifest: RouteRecordRaw[] = [
+  {
     path: '/',
     meta: { breadCrumb: 'Home' },
     children: [
@@ -8,7 +9,7 @@ const manifest: RouteRecordRaw[] = [{
         name: 'dashboard',
         meta: { breadCrumb: 'Home' },
         path: '',
-        component: () => import('../views/DashBoard.vue'),
+        component: () => import('../views/DashBoard.vue')
       },
       {
         meta: { breadCrumb: 'Show' },
@@ -21,29 +22,29 @@ const manifest: RouteRecordRaw[] = [{
             meta: { breadCrumb: 'Episode' },
             name: 'episode',
             path: 'episode/:episodeId',
-            component: () => import('../views/ShowInfo.vue'),
+            component: () => import('../views/ShowInfo.vue')
           }
-          
-        ],
+        ]
       },
       {
         path: 'search/:query',
         name: 'search',
         component: () => import('@/views/SearchResults.vue'),
-        meta: { breadCrumb: 'Searching' },
-      },
-    ],
-}, {
-  path: '/about',
-  meta: { breadCrumb: 'Test'},
-  children: [
-    {
-      name: 'about',
-      path: '/',
-      component: () => import('../views/AboutView.vue'),
-
-    }
-  ],
-}]
+        meta: { breadCrumb: 'Searching' }
+      }
+    ]
+  },
+  {
+    path: '/about',
+    meta: { breadCrumb: 'Test' },
+    children: [
+      {
+        name: 'about',
+        path: '/',
+        component: () => import('../views/AboutView.vue')
+      }
+    ]
+  }
+];
 
 export default manifest;
