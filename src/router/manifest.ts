@@ -34,6 +34,7 @@ const manifest: RouteRecordRaw[] = [
       }
     ]
   },
+  // not used in project
   {
     path: '/about',
     meta: { breadCrumb: 'Test' },

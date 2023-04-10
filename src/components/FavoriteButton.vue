@@ -1,13 +1,11 @@
-<script lang="ts">
+<script setup lang="ts">
 import { useTvMazeStore } from '@/stores/tvMaze';
 import type { Show } from '@/stores/tvMaze';
 
 interface FavoriteButtonProps {
   show: Show;
 }
-</script>
 
-<script setup lang="ts">
 const props = defineProps<FavoriteButtonProps>();
 
 const store = useTvMazeStore();
@@ -43,7 +41,7 @@ const removeFavoriteShow = () => {
 .favorite {
   height: 24px;
 
-  font-family: 'Inter';
+  font-family: 'Inter', serif;
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -54,7 +52,7 @@ const removeFavoriteShow = () => {
   border: none;
 
   color: #ffffff;
-  text-shadow: 0px 0px 3px #000000;
+  text-shadow: 0 0 3px #000000;
 }
 
 .remove-favorite {

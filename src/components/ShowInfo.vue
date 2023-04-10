@@ -1,16 +1,15 @@
-<script lang="ts">
+<script setup lang="ts">
 import type { Show } from '@/stores/tvMaze';
 import ShowCard from '@/components/ShowCard.vue';
 import { computed } from 'vue';
 interface ShowInfoComponent {
   show?: Show;
 }
-</script>
 
-<script setup lang="ts">
 const props = defineProps<ShowInfoComponent>();
 
 const scheduled = computed(() => {
+  // seems like good idea for 'utils' with 'tests'
   const schedule = props.show?.schedule;
   if (!schedule || (!schedule.time && !schedule.days.length)) {
     return `N/A`;

@@ -1,16 +1,14 @@
-<script lang="ts">
+<script setup lang="ts">
+// no need to mix `script setup` with `script`
 import sanitizeHtml from 'sanitize-html';
 import { useRouter } from 'vue-router';
 import type { Show } from '@/stores/tvMaze';
 import FavoriteButton from './FavoriteButton.vue';
-import noImage from '@/assets/No_image.png';
 
 interface ShowCardProps {
   show: Show;
 }
-</script>
 
-<script setup lang="ts">
 const props = defineProps<ShowCardProps>();
 const router = useRouter();
 const goToShow = () => {
@@ -28,17 +26,17 @@ const goToShow = () => {
       />
       <img
         v-else
-        :src="noImage"
+        src="@/assets/No_image.png"
         :alt="`There is no poster for the episode called '${props.show.name}', so it's a placeholder here`"
       />
       <div class="card-controls">
         <p class="show-rating">★{{ props.show.rating?.average }}</p>
-        <FavoriteButton :show="props.show"></FavoriteButton>
+        <FavoriteButton :show="props.show" />
       </div>
     </div>
     <div class="show-info">
       <h5 class="show-title">{{ props.show.name }}</h5>
-      <div class="show-description" v-html="sanitizeHtml(props.show.summary || ``)"></div>
+      <div class="show-description" v-html="sanitizeHtml(props.show.summary || ``)" />
     </div>
   </div>
 </template>
@@ -52,16 +50,16 @@ const goToShow = () => {
   gap: 4px;
 
   position: absolute;
-  left: 0px;
+  left: 0;
   width: 100%;
-  bottom: 0px;
+  bottom: 0;
 }
 
 .show-rating {
   width: 22px;
   height: 24px;
 
-  font-family: 'Inter';
+  font-family: 'Inter', serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -71,7 +69,7 @@ const goToShow = () => {
 
   color: #ffffff;
 
-  text-shadow: 0px 0px 3px #000000;
+  text-shadow: 0 0 3px #000000;
   flex: 1;
   cursor: default;
 }
@@ -79,12 +77,11 @@ const goToShow = () => {
   position: relative;
   flex-direction: row;
   display: flex;
-  padding: 0px;
+  padding: 0;
 
   flex: none;
   order: 0;
   align-self: stretch;
-  flex-grow: 1;
   flex: 1;
   margin-right: 50px;
   margin-bottom: 20px;

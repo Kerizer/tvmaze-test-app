@@ -1,6 +1,8 @@
-<script lang="ts">
+<script setup lang="ts">
+// no need to mix `script setup` with `script`
+
 import sanitizeHtml from 'sanitize-html';
-import noImage from '@/assets/No_image.png';
+
 interface EpisodeCardProps {
   id: number;
   name: string;
@@ -12,9 +14,7 @@ interface EpisodeCardProps {
   date: string;
   rating: number | null;
 }
-</script>
 
-<script setup lang="ts">
 const props = defineProps<EpisodeCardProps>();
 </script>
 
@@ -36,12 +36,12 @@ const props = defineProps<EpisodeCardProps>();
         />
         <img
           v-else
-          :src="noImage"
+          src="@/assets/No_image.png"
           :alt="`There is no poster for the episode called '${props.name}', so it's a placeholder here`"
         />
       </div>
       <div class="episode-info">
-        <div class="episode-description" v-html="sanitizeHtml(props.description || ``)"></div>
+        <div class="episode-description" v-html="sanitizeHtml(props.description || ``)" />
         <div class="episode-meta">
           <p>Date: {{ props.date }}</p>
           <p>Runtime: {{ props.runtime || 'N/A' }}</p>

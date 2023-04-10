@@ -68,3 +68,11 @@ npm run test:e2e
 ```sh
 npm run lint
 ```
+// initially
+//  ✖ 6 problems (0 errors, 6 warnings)
+
+
+// and add
+```sh
+npm run format
+```

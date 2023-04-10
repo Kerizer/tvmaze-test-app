@@ -6,8 +6,9 @@
           <router-link
             :class="`${crumb.isActive ? 'active' : ''}`"
             :to="{ path: (crumb.disabled && '') || crumb.path }"
-            >{{ crumb.text }}</router-link
           >
+            {{ crumb.text }}
+          </router-link>
         </li>
       </template>
     </ul>
@@ -19,6 +20,11 @@ import { computed } from 'vue';
 import { compile } from 'path-to-regexp';
 import { useRoute } from 'vue-router';
 
+// in other components structure has other order:
+// 1. Script
+// 2. Template
+// 3. Styles
+
 interface Breadcrumbs {
   text: string;
   path: string;
@@ -28,6 +34,9 @@ interface Breadcrumbs {
 
 const route = useRoute();
 
+// Doesn't fit the design logic.
+// When you open the "show" itself, then broadcast will be: Home/Show/${showName}
+// P.s. possible to simplify
 const breadCrumbs = computed((): Breadcrumbs[] => {
   const crumbs: Breadcrumbs[] = [];
 

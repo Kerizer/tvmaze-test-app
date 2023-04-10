@@ -1,16 +1,12 @@
-<script lang="ts">
+<script setup lang="ts">
+import { useTvMazeStore } from '@/stores/tvMaze';
+import { useRouter } from 'vue-router';
+
 interface FavoriteShowProps {
   id: number;
   imageSrc?: string;
   showTitle?: string;
 }
-</script>
-
-<script setup lang="ts">
-import { useTvMazeStore } from '@/stores/tvMaze';
-import { useRouter } from 'vue-router';
-import noImage from '@/assets/No_image.png';
-
 const props = defineProps<FavoriteShowProps>();
 
 const router = useRouter();
@@ -28,10 +24,10 @@ const removeFavoriteShow = () => {
 
 <template>
   <div class="favorite-show-card" @click.prevent="goToShow">
-    <img v-if="props.imageSrc" :src="props.imageSrc" />
+    <img v-if="props.imageSrc" :src="props.imageSrc" alt="" />
     <img
       v-else
-      :src="noImage"
+      src="@/assets/No_image.png"
       :alt="`There is no poster for the show, so it's a placeholder here`"
     />
     <h5>{{ props.showTitle }}</h5>

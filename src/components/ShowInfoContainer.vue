@@ -1,14 +1,12 @@
-<script lang="ts">
-interface ShowInfoContainerProps {
-  showId: number;
-}
-</script>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 import EpisodeCard from '@/components/EpisodeCard.vue';
 import ShowInfo from '@/components/ShowInfo.vue';
 import { useTvMazeStore } from '@/stores/tvMaze';
+
+interface ShowInfoContainerProps {
+  showId: number;
+}
 
 const props = defineProps<ShowInfoContainerProps>();
 const store = useTvMazeStore();
@@ -21,7 +19,7 @@ const episodes = computed(() => {
 </script>
 
 <template>
-  <ShowInfo :show="store.currentShowInfo"></ShowInfo>
+  <ShowInfo :show="store.currentShowInfo" />
 
   <h4>Episodes</h4>
   <EpisodeCard

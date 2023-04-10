@@ -1,12 +1,10 @@
-<script lang="ts">
+<script lang="ts" setup>
+import FavoriteShowCard from '@/components/FavoriteShowCard.vue';
+import type { Show } from '@/stores/tvMaze';
+
 interface FavoriteShowsListProps {
   favoriteShows: Show[];
 }
-</script>
-
-<script lang="ts" setup>
-import type { Show } from '@/stores/tvMaze';
-import FavoriteShowCard from '@/components/FavoriteShowCard.vue';
 
 const props = defineProps<FavoriteShowsListProps>();
 </script>
@@ -35,7 +33,7 @@ h4 {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 0px;
+  padding: 0;
   flex-wrap: wrap;
 }
 </style>

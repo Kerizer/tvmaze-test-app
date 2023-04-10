@@ -1,13 +1,11 @@
-<script lang="ts">
+<script setup lang="ts">
+import ShowCard from '@/components/ShowCard.vue';
+import type { Show } from '@/stores/tvMaze';
+
 interface ShowsListProps {
   shows: Show[];
   title: string;
 }
-</script>
-
-<script setup lang="ts">
-import ShowCard from '@/components/ShowCard.vue';
-import type { Show } from '@/stores/tvMaze';
 
 const props = defineProps<ShowsListProps>();
 </script>
@@ -15,7 +13,7 @@ const props = defineProps<ShowsListProps>();
 <template>
   <h4>{{ props.title }}</h4>
   <div class="cards">
-    <ShowCard v-for="show in props.shows" :key="show.id" :show="show"></ShowCard>
+    <ShowCard v-for="show in props.shows" :key="show.id" :show="show" />
   </div>
 </template>
 
@@ -24,7 +22,7 @@ const props = defineProps<ShowsListProps>();
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 0px;
+  padding: 0;
   flex-wrap: wrap;
 }
 

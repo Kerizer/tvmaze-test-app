@@ -6,7 +6,7 @@ import FavoriteShowsContainer from '@/components/FavoriteShowsContainer.vue';
 </script>
 
 <template>
-  <SearchForm></SearchForm>
+  <SearchForm />
   <Suspense>
     <UpcomingShowsContainer />
     <template #fallback>
