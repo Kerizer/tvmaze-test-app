@@ -14,14 +14,12 @@ const manifest: RouteRecordRaw[] = [
       {
         meta: { breadCrumb: 'Show' },
         name: 'show',
-        path: 'shows/:showId',
-        component: () => import('../views/ShowInfo.vue'),
-        // Just to test the breadcrumbs nesting
+        path: 'shows',
         children: [
           {
-            meta: { breadCrumb: 'Episode' },
-            name: 'episode',
-            path: 'episode/:episodeId',
+            meta: { breadCrumb: 'Show' },
+            name: 'show',
+            path: ':showId',
             component: () => import('../views/ShowInfo.vue')
           }
         ]
@@ -31,18 +29,6 @@ const manifest: RouteRecordRaw[] = [
         name: 'search',
         component: () => import('@/views/SearchResults.vue'),
         meta: { breadCrumb: 'Searching' }
-      }
-    ]
-  },
-  // not used in project
-  {
-    path: '/about',
-    meta: { breadCrumb: 'Test' },
-    children: [
-      {
-        name: 'about',
-        path: '/',
-        component: () => import('../views/AboutView.vue')
       }
     ]
   }

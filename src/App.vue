@@ -10,7 +10,7 @@ import BreadCrumbs from '@/components/BreadCrumbs.vue';
     </div>
   </header>
 
-  <RouterView />
+  <RouterView :key="$route.fullPath" />
 </template>
 
 <style scoped></style>

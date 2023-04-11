@@ -1,29 +1,7 @@
-<template>
-  <nav class="breadcrumbs">
-    <ul>
-      <template v-for="(crumb, index) in breadCrumbs" :key="index">
-        <li>
-          <router-link
-            :class="`${crumb.isActive ? 'active' : ''}`"
-            :to="{ path: (crumb.disabled && '') || crumb.path }"
-          >
-            {{ crumb.text }}
-          </router-link>
-        </li>
-      </template>
-    </ul>
-  </nav>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 import { compile } from 'path-to-regexp';
 import { useRoute } from 'vue-router';
-
-// in other components structure has other order:
-// 1. Script
-// 2. Template
-// 3. Styles
 
 interface Breadcrumbs {
   text: string;
@@ -48,6 +26,7 @@ const breadCrumbs = computed((): Breadcrumbs[] => {
       crumbs.push({
         text: currentRoute.meta.breadCrumb as string,
         path: compile(currentRoute.path)(route.params),
+        disabled: !currentRoute.components,
         isActive: crumbPath === route.path
       });
     }
@@ -56,6 +35,25 @@ const breadCrumbs = computed((): Breadcrumbs[] => {
   return crumbs;
 });
 </script>
+
+<template>
+  <nav class="breadcrumbs">
+    <ul>
+      <template v-for="(crumb, index) in breadCrumbs" :key="index">
+        <li>
+          <span v-if="crumb.disabled">{{ crumb.text }}</span>
+          <router-link
+            v-else
+            :class="`${crumb.isActive ? 'active' : ''}`"
+            :to="{ path: crumb.path }"
+          >
+            {{ crumb.text }}
+          </router-link>
+        </li>
+      </template>
+    </ul>
+  </nav>
+</template>
 
 <style scoped>
 ul {

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// no need to mix `script setup` with `script`
-
 import sanitizeHtml from 'sanitize-html';
 
 type EpisodeCardProps = {

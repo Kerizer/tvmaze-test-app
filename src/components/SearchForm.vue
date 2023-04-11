@@ -2,18 +2,23 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-// const state = reactive({msg: ""});
-const msg = ref('');
+type SearchFormProps = {
+  query?: string;
+};
 
+const props = defineProps<SearchFormProps>();
+
+const query = ref(props.query || '');
 const router = useRouter();
+
 const redirectToSearch = () => {
-  router.push(`/search/${msg.value}`);
+  router.push(`/search/${query.value}`);
 };
 </script>
 
 <template>
   <form @submit.prevent="redirectToSearch" action="">
-    <input type="text" name="search" v-model.trim="msg" placeholder="Type your query" />
+    <input type="text" name="search" v-model.trim="query" placeholder="Type your query" />
     <button type="submit" name="submit">Search</button>
   </form>
 </template>

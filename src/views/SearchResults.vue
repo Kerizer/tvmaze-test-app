@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import ShowCard from '@/components/ShowCard.vue';
+import SearchForm from '@/components/SearchForm.vue';
+import ShowsList from '@/components/ShowsList.vue';
 import { useTvMazeStore } from '@/stores/tvMaze';
 import { onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 const store = useTvMazeStore();
 
-// todo better in setup (hook: created), onMounted usually need for animation logic
-// onMounted(() => {
 store.getSearchResults(route.params.query.toString());
-// });
 
 onUnmounted(() => {
   store.clearSearchResults();
@@ -17,9 +15,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <!-- add search -->
-  <!-- better to create one wrapper, like ShowsList -->
-  <div>
-    <ShowCard v-for="show in store.searchResults" :key="show.show.id" :show="show.show" />
-  </div>
+  <SearchForm :query="route.params.query.toString()" />
+  <ShowsList title="Searching results:" :shows="store.getSearchedShows" />
 </template>

@@ -107,12 +107,6 @@ dist
 # TernJS port file
 .tern-port
 
-# how remove .history from git:
-# 1. remove .history folder
-# 2. commit
-# 3. add to .gitignore
-# 4. commit
-.history/
 
 # IDEAS
 .idea

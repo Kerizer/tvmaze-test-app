@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 // The module itself is broken, but typings are still working
-import type { Ishow, Iepisode, IshowSearch, Inetwork, Iratring } from 'tvmaze-api-ts';
+import type { Ishow, Iepisode, IshowSearch, Inetwork, Iratring, Ischedule } from 'tvmaze-api-ts';
 import { buildURLQuery } from '@/utils';
 import type { Ref } from 'vue';
+
+export interface Schedule extends Ischedule {}
 
 // Typos in actual library
 interface Network extends Inetwork {
@@ -54,11 +56,7 @@ interface TvMazeState {
 
 const api = 'https://api.tvmaze.com';
 
-// TODO: Find a better way to use useStorage with typings
-// const favoriteShows = useStorage('favoriteShows', []) as unknown as Show[];
-// Answer:
 const favoriteShows = useStorage<Show[]>('favoriteShows', []);
-// favoriteShows not `Show[]` but Ref<Show[]>
 
 export const useTvMazeStore = defineStore('tvMaze', {
   state: (): TvMazeState => ({
@@ -74,41 +72,23 @@ export const useTvMazeStore = defineStore('tvMaze', {
       return (id: number) => Boolean(state.favoriteShows.find((show) => show.id === id));
     },
     getRandomShows(state) {
-      // simplified, previous code: PREVIOUS_getRandomShows
       return (n: number): Show[] => {
         const shuffledShows = [...state.shows].sort(() => Math.random() - 0.5);
         return shuffledShows.slice(0, n);
       };
     },
-    PREVIOUS_getRandomShows(state) {
-      return (n: number): Show[] => {
-        const result = new Array(n);
-        let len = state.shows.length;
-        const taken = new Array(len);
-
-        // Return all the shows if asked for more than we have
-        if (n > len) {
-          // todo we can shuffle
-          return state.shows;
-        }
-
-        // mutating arguments usually is bed practice
-        while (n--) {
-          const x = Math.floor(Math.random() * len);
-          result[n] = state.shows[x in taken ? taken[x] : x];
-          taken[x] = --len in taken ? taken[len] : len;
-        }
-        return result;
-        // I don't understand idea, why need `taken`?
-      };
-    },
     getUpcomingShows(state) {
       return (n: number): Show[] => {
-        // return state.upcomingShows.splice(0, n);
-        // splice is effect existed array, so better to use:
         return state.upcomingShows.slice(0, n);
-        // because not obvious then getter can change state
       };
+    },
+    getSearchedShows(state) {
+      return state.searchResults.reduce((acc: Show[], result: SearchResults) => {
+        if (result.show) {
+          return [...acc, result.show];
+        }
+        return [...acc];
+      }, []);
     }
   },
   actions: {
@@ -226,10 +206,6 @@ export const useTvMazeStore = defineStore('tvMaze', {
     clearSearchResults() {
       this.searchResults = [];
     },
-    // not using in project
-    // clearEpisodes() {
-    //   this.currentShowEpisodes = [];
-    // },
     clearShows() {
       this.shows = [];
     },

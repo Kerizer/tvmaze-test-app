@@ -2,6 +2,7 @@
 import type { Show } from '@/stores/tvMaze';
 import ShowCard from '@/components/ShowCard.vue';
 import { computed } from 'vue';
+import { buildSchedule } from '@/utils';
 
 type ShowInfoComponent = {
   show?: Show;
@@ -9,46 +10,7 @@ type ShowInfoComponent = {
 
 const props = defineProps<ShowInfoComponent>();
 
-const scheduled = computed(() => {
-  // seems like good idea for 'utils' with 'tests'
-  const schedule = props.show?.schedule;
-  if (!schedule || (!schedule.time && !schedule.days.length)) {
-    return `N/A`;
-  }
-  const [hour, minute] = schedule.time.split(':');
-  const formattedTime = schedule.time ? `${hour}:${minute.padStart(2, '0')}` : ``;
-
-  if (schedule.days.length === 1) {
-    return `Every ${schedule.days[0]} at ${formattedTime}`;
-  }
-
-  if (
-    schedule.days.length === 5 &&
-    schedule.days.includes('Monday') &&
-    schedule.days.includes('Tuesday') &&
-    schedule.days.includes('Wednesday') &&
-    schedule.days.includes('Thursday') &&
-    schedule.days.includes('Friday')
-  ) {
-    return `Every weekday at ${formattedTime}`;
-  }
-
-  const formattedDays = schedule.days
-    .sort((a, b) => a.localeCompare(b))
-    .reduce((result, day, index, array) => {
-      if (index === 0) {
-        result += day;
-      } else if (index === array.length - 1) {
-        result += ` and ${day}`;
-      } else {
-        result += `, ${day}`;
-      }
-
-      return result;
-    }, '');
-
-  return `Every ${formattedDays} at ${formattedTime}`;
-});
+const scheduled = computed(() => buildSchedule(props.show?.schedule));
 </script>
 
 <template>
