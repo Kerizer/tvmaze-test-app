@@ -2,9 +2,9 @@
 import FavoriteShowCard from '@/components/FavoriteShowCard.vue';
 import type { Show } from '@/stores/tvMaze';
 
-interface FavoriteShowsListProps {
+type FavoriteShowsListProps = {
   favoriteShows: Show[];
-}
+};
 
 const props = defineProps<FavoriteShowsListProps>();
 </script>

@@ -2,11 +2,11 @@
 import { useTvMazeStore } from '@/stores/tvMaze';
 import { useRouter } from 'vue-router';
 
-interface FavoriteShowProps {
+type FavoriteShowProps = {
   id: number;
   imageSrc?: string;
   showTitle?: string;
-}
+};
 const props = defineProps<FavoriteShowProps>();
 
 const router = useRouter();

@@ -2,10 +2,10 @@
 import ShowCard from '@/components/ShowCard.vue';
 import type { Show } from '@/stores/tvMaze';
 
-interface ShowsListProps {
+type ShowsListProps = {
   shows: Show[];
   title: string;
-}
+};
 
 const props = defineProps<ShowsListProps>();
 </script>

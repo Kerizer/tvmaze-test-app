@@ -5,9 +5,9 @@ import { useRouter } from 'vue-router';
 import type { Show } from '@/stores/tvMaze';
 import FavoriteButton from './FavoriteButton.vue';
 
-interface ShowCardProps {
+type ShowCardProps = {
   show: Show;
-}
+};
 
 const props = defineProps<ShowCardProps>();
 const router = useRouter();

@@ -2,9 +2,10 @@
 import type { Show } from '@/stores/tvMaze';
 import ShowCard from '@/components/ShowCard.vue';
 import { computed } from 'vue';
-interface ShowInfoComponent {
+
+type ShowInfoComponent = {
   show?: Show;
-}
+};
 
 const props = defineProps<ShowInfoComponent>();
 

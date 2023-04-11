@@ -3,7 +3,7 @@
 
 import sanitizeHtml from 'sanitize-html';
 
-interface EpisodeCardProps {
+type EpisodeCardProps = {
   id: number;
   name: string;
   episodeNumber: number;
@@ -13,7 +13,7 @@ interface EpisodeCardProps {
   runtime: number | null;
   date: string;
   rating: number | null;
-}
+};
 
 const props = defineProps<EpisodeCardProps>();
 </script>

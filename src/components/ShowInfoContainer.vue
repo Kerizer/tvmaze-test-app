@@ -4,9 +4,9 @@ import EpisodeCard from '@/components/EpisodeCard.vue';
 import ShowInfo from '@/components/ShowInfo.vue';
 import { useTvMazeStore } from '@/stores/tvMaze';
 
-interface ShowInfoContainerProps {
+type ShowInfoContainerProps = {
   showId: number;
-}
+};
 
 const props = defineProps<ShowInfoContainerProps>();
 const store = useTvMazeStore();
