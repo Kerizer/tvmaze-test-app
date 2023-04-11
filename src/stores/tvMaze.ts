@@ -70,10 +70,6 @@ export const useTvMazeStore = defineStore('tvMaze', {
     upcomingShows: []
   }),
   getters: {
-    // in Pinia no need to create separate getters for sharing state
-    allShows(state) {
-      return state.shows;
-    },
     isFavorite(state) {
       return (id: number) => Boolean(state.favoriteShows.find((show) => show.id === id));
     },

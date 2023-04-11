@@ -2,9 +2,9 @@
 import { useTvMazeStore } from '@/stores/tvMaze';
 import type { Show } from '@/stores/tvMaze';
 
-interface FavoriteButtonProps {
+type FavoriteButtonProps = {
   show: Show;
-}
+};
 
 const props = defineProps<FavoriteButtonProps>();
 
