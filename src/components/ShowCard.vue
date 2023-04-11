@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// no need to mix `script setup` with `script`
 import sanitizeHtml from 'sanitize-html';
 import { useRouter } from 'vue-router';
 import type { Show } from '@/stores/tvMaze';

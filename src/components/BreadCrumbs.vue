@@ -26,7 +26,7 @@ const breadCrumbs = computed((): Breadcrumbs[] => {
       crumbs.push({
         text: currentRoute.meta.breadCrumb as string,
         path: compile(currentRoute.path)(route.params),
-        disabled: !currentRoute.components,
+        // disabled: !currentRoute.components,
         isActive: crumbPath === route.path
       });
     }

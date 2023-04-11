@@ -1,32 +1,10 @@
 import { defineStore } from 'pinia';
 import { useStorage } from '@vueuse/core';
 // The module itself is broken, but typings are still working
-import type { Ishow, Iepisode, IshowSearch, Inetwork, Iratring, Ischedule } from 'tvmaze-api-ts';
+// import type { Ishow, Iepisode, IshowSearch, Inetwork, Iratring, Ischedule, Iimage } from './tvmaze';
 import { buildURLQuery } from '@/utils';
 import type { Ref } from 'vue';
-
-export interface Schedule extends Ischedule {}
-
-// Typos in actual library
-interface Network extends Inetwork {
-  name: string;
-}
-
-export interface Show extends Ishow {
-  // Typos in actual library
-  rating: Iratring | null;
-  network: Network;
-
-  // Missing in library
-  ended?: string;
-  averageRuntime: number;
-}
-
-// For some reason library doesn't have the show in the interface
-interface Episode extends Iepisode {
-  show: Show;
-  rating: Iratring;
-}
+import type { Episode, Show, ShowSearch } from './tvMaze-types';
 
 type GroupedEpisodes = { [showId: number]: Episode[] };
 
@@ -35,7 +13,7 @@ type ShowWithEpisodes = {
   episodes: Episode[];
 };
 
-interface SearchResults extends IshowSearch {
+interface SearchResults extends ShowSearch {
   show: Show;
 }
 
@@ -45,10 +23,12 @@ interface CurrentShowInfo extends Show {
   };
 }
 
+export * from './tvMaze-types';
+
 interface TvMazeState {
   shows: Show[];
   currentShowInfo?: CurrentShowInfo;
-  currentShowEpisodes: Iepisode[];
+  currentShowEpisodes: Episode[];
   searchResults: SearchResults[];
   favoriteShows: Ref<Show[]>;
   upcomingShows: Show[];
